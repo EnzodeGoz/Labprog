@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include<conio.h>
 // foda-se tudo faz um novo branch e mete tudo em array ao inves de structure
 
 struct produto
@@ -30,47 +29,52 @@ int pedido(){
 */
     return 0;
 }
-int estoque(struct product item[n], int n){
+ int estoque(int n){
     puts("|======================|");
     printf("        ESTOQUE\n");
     puts("|======================|");
     printf("CÓDIGO | NOME DO PRODUTO | QUANTIDADE | PREÇO\n");
-    for(int i=0;i<n;i++) {
-    printf("%d          %-10s       %-10d   R$%4.f\n", item[i].codigo, item[i].nome_produto, item[i].quantidade, item[i].preco);
-    } 
-return 0;
+    if (n == 0){
+        return 0;
+    }
+    else{
+        for(int i=0;i<n;i++) {
+        // printf("%d          %-10s       %-10d   R$%4.f\n", item[i].codigo, item[i].nome_produto, item[i].quantidade, item[i].preco);
+        } 
+    
+    }    
 }
-/*
-BOTA EM UM PONTEIRO DE ARRAYS DAÍ NO PARÂMETRO COLOCA PONTEIROS DE ARRAYS
-*/
 int estoque_acervo(){
+
     return 0;
 }
 
 int addestoque(){
-    
     int n = 0, i;
     printf("Adicione o número de produtos:\n>");
     scanf("%d", &n);
-    struct produto item[n];
+    int item[100][4];
+    int *ptritem[100][4] = &item[100][4];
     for(i=0;i<n;i++){
+        for (int o=0;o<n;o++){
         printf("O código do item:\n>");
-        scanf("%d", &item[i].codigo);
+        scanf("%d", &ptritem[i][o]);
         printf("O nome do produto:\n>");
-        scanf("%s", &item[i].nome_produto);
+        scanf("%s", &ptritem[i][o]);
         printf("A quantidade:\n>");
-        scanf("%d", &item[i].quantidade);
+        scanf("%d", &ptritem[i][o]);
         printf("O preço, em reais:\n>");
-        scanf("%f", &item[i].preco);
-        
+        scanf("%f", &ptritem[i][o]);
+        }
     }
+    printf("%i", *ptritem);
     system("CLS");
-    estoque(item[n], n);
     return 0;
 }
 
 int delestoque(){
     printf("Esse é o estoque atual:\n");
+    // vai ter de que utilizar o free(ponteiro)
     return 0;
 }
 
@@ -110,7 +114,10 @@ int menu_estoque(){
         switch(esc001){
             case 1:
                 system("CLS");
-                addestoque();
+                int n = 0;
+                printf("Adicione o número de produtos:\n>");
+                scanf("%d", &n);
+                addestoque(n);
                 break;
             case 2:
                 system("CLS");
