@@ -1,8 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
-/* Vê se algumas funções não podem ser void() e https://www.daniweb.com/programming/software-development/threads/164292/menu-function-choose-with-switch-and-return-to-menu
- tentar consertar o bug caso o usuário inputa algo != int
-*/
+#include<conio.h>
+// foda-se tudo faz um novo branch e mete tudo em array ao inves de structure
+
+struct produto
+{
+    int codigo;
+    char nome_produto[100];
+    int quantidade;
+    float preco;
+};
+
+
 int print_menu(){
     printf("\nEscolha uma das opções no menu abaixo:\n");
     printf("1) Gerenciar o estoque\n2) Exibir a vitrine\n3) Carrinho de compras\n4) Sair\n");
@@ -21,14 +30,43 @@ int pedido(){
 */
     return 0;
 }
-
-int estoque(){
+int estoque(struct product item[n], int n){
+    puts("|======================|");
+    printf("        ESTOQUE\n");
+    puts("|======================|");
+    printf("CÓDIGO | NOME DO PRODUTO | QUANTIDADE | PREÇO\n");
+    for(int i=0;i<n;i++) {
+    printf("%d          %-10s       %-10d   R$%4.f\n", item[i].codigo, item[i].nome_produto, item[i].quantidade, item[i].preco);
+    } 
+return 0;
+}
+/*
+BOTA EM UM PONTEIRO DE ARRAYS DAÍ NO PARÂMETRO COLOCA PONTEIROS DE ARRAYS
+*/
+int estoque_acervo(){
     return 0;
 }
 
 int addestoque(){
-    printf("Esse é o estoque atual:\n");
-    return 1;
+    
+    int n = 0, i;
+    printf("Adicione o número de produtos:\n>");
+    scanf("%d", &n);
+    struct produto item[n];
+    for(i=0;i<n;i++){
+        printf("O código do item:\n>");
+        scanf("%d", &item[i].codigo);
+        printf("O nome do produto:\n>");
+        scanf("%s", &item[i].nome_produto);
+        printf("A quantidade:\n>");
+        scanf("%d", &item[i].quantidade);
+        printf("O preço, em reais:\n>");
+        scanf("%f", &item[i].preco);
+        
+    }
+    system("CLS");
+    estoque(item[n], n);
+    return 0;
 }
 
 int delestoque(){
@@ -40,7 +78,7 @@ int menu_estoque(){
     puts("|======================|");
     printf("        ESTOQUE\n");
     puts("|======================|");
-    if (estoque() == 0){
+    if (estoque_acervo() == 0){
         printf("O estoque está vazio.\n");
         printf("Deseja cadastrar produtos no estoque?\n");
         printf("1) Sim\n2) Sair\n>");
@@ -62,9 +100,9 @@ int menu_estoque(){
             puts("|======================================|\n");
         }
     }
-    else if(estoque() ==  1){
+    else if(estoque_acervo() ==  1){
         printf("Esse é o estoque atual:\n");
-        estoque();
+        estoque_acervo();
         printf("\nDeseja adicionar ou remover um produto do estoque?\n");
         printf("1) Adicionar um produto\n2) Remover um produto\n3) Sair\n>");
         int esc001 = 0;
@@ -97,10 +135,10 @@ int vitrine(){
     puts("|======================|");
     printf("        VITRINE\n");
     puts("|======================|");
-    if (estoque() == 0){
+    if (estoque_acervo() == 0){
         printf("A vitrine está vazia.\n");
     }
-    else if (estoque() == 1){
+    else if (estoque_acervo() == 1){
         printf("Fudeu :DDDDD");
     }
     return 0;
@@ -198,6 +236,7 @@ printf("Olá! Bem vindo ao programa de gerenciamento de compras.\n");
             menu_carrinho_compras();
             break;
         case 4:
+            system("CLS");
             puts("Sair foi escolhido.");
             break;
         default:
