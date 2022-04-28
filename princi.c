@@ -54,7 +54,7 @@ int addestoque(){
     printf("Adicione o número de produtos:\n>");
     scanf("%d", &n);
     int item[100][4];
-    int *ptritem[100][4] = &item[100][4];
+    int *ptritem[100][4] = item;
     for(i=0;i<n;i++){
         for (int o=0;o<n;o++){
         printf("O código do item:\n>");
