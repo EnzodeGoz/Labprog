@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include<conio.h>
 // foda-se tudo faz um novo branch e mete tudo em array ao inves de structure
 
 struct produto
@@ -30,42 +29,65 @@ int pedido(){
 */
     return 0;
 }
-int estoque(struct product item[n], int n){
+int estoque(struct produto* item, int n){
+    system("clear");
     puts("|======================|");
     printf("        ESTOQUE\n");
     puts("|======================|");
     printf("CÓDIGO | NOME DO PRODUTO | QUANTIDADE | PREÇO\n");
     for(int i=0;i<n;i++) {
-    printf("%d          %-10s       %-10d   R$%4.f\n", item[i].codigo, item[i].nome_produto, item[i].quantidade, item[i].preco);
+    printf("%i          %-10s       %-10i   R$%2.f\n",(item+i)->codigo,(item+i)->nome_produto, (item+i)->quantidade, (item+i)->preco);
     } 
-return 0;
-}
-/*
-BOTA EM UM PONTEIRO DE ARRAYS DAÍ NO PARÂMETRO COLOCA PONTEIROS DE ARRAYS
-*/
-int estoque_acervo(){
     return 0;
 }
 
+int estoque_acervo(){
+    return 0;
+    system("clear");
+     return 1;
+}
+
 int addestoque(){
-    
-    int n = 0, i;
-    printf("Adicione o número de produtos:\n>");
-    scanf("%d", &n);
-    struct produto item[n];
-    for(i=0;i<n;i++){
-        printf("O código do item:\n>");
-        scanf("%d", &item[i].codigo);
-        printf("O nome do produto:\n>");
-        scanf("%s", &item[i].nome_produto);
-        printf("A quantidade:\n>");
-        scanf("%d", &item[i].quantidade);
-        printf("O preço, em reais:\n>");
-        scanf("%f", &item[i].preco);
-        
+    int q = 0;
+    printf("Deseja criar uma nova lista de produtos ou adicionar mais produtos a lista existente?\n");
+    printf("1)Criar nova lista\n2)Adicionar novos produtos a lista existente\n3)Sair\n");
+    scanf("%d", &q);
+    switch(q){
+        case 1:
+            int  i, n;
+            printf("Adicione o número de produtos:\n>");
+            scanf("%d", &n);
+            // Talvez tenha que criar um objeto da struct e daí colocar o ponteiro para apontar no objeto
+            struct produto *item;
+            item = (struct produto *) malloc(n * sizeof(struct produto));
+                for(i=0;i<n;i++){
+                    printf("O código do item:\n>");
+                    scanf("%i", &(item+i)->codigo);
+                    printf("O nome do produto:\n>");
+                    scanf("%s", &(item+i)->nome_produto);
+                    printf("A quantidade:\n>");
+                    scanf("%i", &(item+i)->quantidade);
+                    printf("O preço, em reais:\n>");
+                    scanf("%f", &(item+i)->preco);
+                }
+                system("clear");
+                estoque(item,n);
+        break;
+        case 2:
+        // fug :DDDD
+        break;
+        case 3:
+            system("clear");
+            printf("Sair foi escolhido.\n");
+        break;
+        default:
+            system("clear");
+            puts("|======================================|");
+            printf(" Comando inválido.\n Por favor insira uma escolha válida.\n");
+            puts("|======================================|\n");
+        break;
     }
-    system("CLS");
-    estoque(item[n], n);
+    
     return 0;
 }
 
@@ -86,15 +108,15 @@ int menu_estoque(){
         scanf("%d", &esc01);
         switch (esc01) {
             case 1:
-                system("CLS");
+                system("clear");
                 addestoque();
                 break;
             case 2:
-                system("CLS");
+                system("clear");
                 printf("Sair foi escolhido.\n");
                 break;
             default:
-            system("CLS");
+            system("clear");
             puts("|======================================|");
             printf(" Comando inválido.\n Por favor insira uma escolha válida.\n");
             puts("|======================================|\n");
@@ -109,19 +131,19 @@ int menu_estoque(){
         scanf("%d", &esc001);
         switch(esc001){
             case 1:
-                system("CLS");
+                system("clear");
                 addestoque();
                 break;
             case 2:
-                system("CLS");
+                system("clear");
                 delestoque();
                 break;
             case 3:
-                system("CLS");
+                system("clear");
                 printf("Sair foi escolhido.\n");
                 break;
             default:
-                system("CLS");
+                system("clear");
                 puts("|======================================|");
                 printf(" Comando inválido.\n Por favor insira uma escolha válida.\n");
                 puts("|======================================|\n");
@@ -170,15 +192,15 @@ int menu_carrinho_compras(){
         scanf("%d", &esc02);
         switch(esc02){
             case 1:
-                system("CLS");
+                system("clear");
                 addcarrinho_compras();
                 break;
             case 2:
-                system("CLS");
+                system("clear");
                 printf("Sair foi escolhido.\n");
                 break;
             default:
-            system("CLS");
+            system("clear");
             puts("|======================================|");
             printf(" Comando inválido.\n Por favor insira uma escolha válida.\n");
             puts("|======================================|\n");  
@@ -203,11 +225,11 @@ int menu_carrinho_compras(){
                 delcarrinho_compras();
                 break;
             case 4:
-                system("CLS");
+                system("clear");
                 printf("Sair foi escolhido.\n");
                 break;
             default:
-                system("CLS");
+                system("clear");
                 puts("|======================================|");
                 printf(" Comando inválido.\n Por favor insira uma escolha válida.\n");
                 puts("|======================================|\n");
@@ -224,23 +246,23 @@ printf("Olá! Bem vindo ao programa de gerenciamento de compras.\n");
         switch(escolha)
         {
         case 1:
-            system("CLS");
+            system("clear");
             menu_estoque();
             break;
         case 2:
-            system("CLS");     
+            system("clear");     
             vitrine();
             break;
         case 3:
-            system("CLS");     
+            system("clear");     
             menu_carrinho_compras();
             break;
         case 4:
-            system("CLS");
+            system("clear");
             puts("Sair foi escolhido.");
             break;
         default:
-            system("CLS");
+            system("clear");
             puts("|======================================|");
             printf(" Comando inválido.\n Por favor insira uma escolha válida.\n");
             puts("|======================================|\n");
