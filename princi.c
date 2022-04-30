@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 // foda-se tudo faz um novo branch e mete tudo em array ao inves de structure
 
 struct produto
@@ -8,7 +9,7 @@ struct produto
     char nome_produto[100];
     int quantidade;
     float preco;
-};
+} item, *ptritem;
 
 
 int print_menu(){
@@ -29,49 +30,58 @@ int pedido(){
 */
     return 0;
 }
-int estoque(struct produto* item, int n){
+int estoque(struct produto* ptritem, int n){
+    if ((ptritem+1)->quantidade == 0){
+    return 1;
+    }
+    else if ((ptritem+1)->quantidade != 0)
+    {
     system("clear");
     puts("|======================|");
     printf("        ESTOQUE\n");
     puts("|======================|");
     printf("CÓDIGO | NOME DO PRODUTO | QUANTIDADE | PREÇO\n");
     for(int i=0;i<n;i++) {
-    printf("%i          %-10s       %-10i   R$%2.f\n",(item+i)->codigo,(item+i)->nome_produto, (item+i)->quantidade, (item+i)->preco);
+    printf("%i          %-10s       %-10i   R$%2.f\n",(ptritem+i)->codigo,(ptritem+i)->nome_produto, (ptritem+i)->quantidade, (ptritem+i)->preco);
     } 
     return 0;
+    }
 }
 
 int estoque_acervo(){
+    int k = 0;
+    k = estoque(ptritem, 0);
+    if (k == 1){
     return 0;
-    system("clear");
-     return 1;
+    }
+    else {
+    return 1;
+     }
 }
 
 int addestoque(){
     int q = 0;
     printf("Deseja criar uma nova lista de produtos ou adicionar mais produtos a lista existente?\n");
-    printf("1)Criar nova lista\n2)Adicionar novos produtos a lista existente\n3)Sair\n");
+    printf("1)Criar nova lista\n2)Adicionar novos produtos a lista existente\n3)Sair\n>");
     scanf("%d", &q);
     switch(q){
+        int n;
         case 1:
-            int  i, n;
             printf("Adicione o número de produtos:\n>");
             scanf("%d", &n);
-            // Talvez tenha que criar um objeto da struct e daí colocar o ponteiro para apontar no objeto
-            struct produto *item;
-            item = (struct produto *) malloc(n * sizeof(struct produto));
-                for(i=0;i<n;i++){
-                    printf("O código do item:\n>");
-                    scanf("%i", &(item+i)->codigo);
-                    printf("O nome do produto:\n>");
-                    scanf("%s", &(item+i)->nome_produto);
-                    printf("A quantidade:\n>");
-                    scanf("%i", &(item+i)->quantidade);
-                    printf("O preço, em reais:\n>");
-                    scanf("%f", &(item+i)->preco);
+            ptritem = (struct produto *) malloc(n * sizeof(struct produto));
+                for(int i=0;i<n;i++){
+                    printf("O código do produto %i:\n>", i);
+                    scanf("%i", &(ptritem+i)->codigo);
+                    printf("O nome do produto %i:\n>", i);
+                    scanf("%s", &(ptritem+i)->nome_produto);
+                    printf("A quantidade do produto %i:\n>", i);
+                    scanf("%i", &(ptritem+i)->quantidade);
+                    printf("O preço, em reais, do produto %i:\n>", i);
+                    scanf("%f", &(ptritem+i)->preco);
                 }
                 system("clear");
-                estoque(item,n);
+                estoque(ptritem,n);
         break;
         case 2:
         // fug :DDDD
@@ -97,10 +107,9 @@ int delestoque(){
 }
 
 int menu_estoque(){
-    puts("|======================|");
-    printf("        ESTOQUE\n");
-    puts("|======================|");
-    if (estoque_acervo() == 0){
+    int k;
+    k = estoque_acervo();
+    if (k == 0){
         printf("O estoque está vazio.\n");
         printf("Deseja cadastrar produtos no estoque?\n");
         printf("1) Sim\n2) Sair\n>");
@@ -122,9 +131,8 @@ int menu_estoque(){
             puts("|======================================|\n");
         }
     }
-    else if(estoque_acervo() ==  1){
+    else if(k ==  1){
         printf("Esse é o estoque atual:\n");
-        estoque_acervo();
         printf("\nDeseja adicionar ou remover um produto do estoque?\n");
         printf("1) Adicionar um produto\n2) Remover um produto\n3) Sair\n>");
         int esc001 = 0;
@@ -157,10 +165,12 @@ int vitrine(){
     puts("|======================|");
     printf("        VITRINE\n");
     puts("|======================|");
-    if (estoque_acervo() == 0){
+    int k = 0;
+    k = estoque_acervo();
+    if (k == 0){
         printf("A vitrine está vazia.\n");
     }
-    else if (estoque_acervo() == 1){
+    else if (k == 1){
         printf("Fudeu :DDDDD");
     }
     return 0;
@@ -211,7 +221,7 @@ int menu_carrinho_compras(){
         printf("Esse é o seu carrinho de compras:\n");
         carrinho_compras();
         printf("Deseja finalizar a compra ou adicionar e remover itens?\n");
-        printf("1) Finalizar a compra\n2) Adicionar um item\n3) Remover um item\n4) Sair\n>");
+        printf("1) Finalizar a compra\n2) Adicionar um ptritem\n3) Remover um ptritem\n4) Sair\n>");
         int esc002 = 0;
         scanf("%d", &esc002);
         switch(esc002){
@@ -239,9 +249,13 @@ int menu_carrinho_compras(){
 }
 
 int main() {
+ptritem = &item;
+ptritem = (struct produto *) calloc(2,sizeof(struct produto));
 printf("Olá! Bem vindo ao programa de gerenciamento de compras.\n");
     for (int escolha = 0; escolha != 4; escolha = escolha) {
         print_menu();
+        printf("\n%i  PQ?\n", (ptritem+1)->quantidade);
+        system("pause");
         scanf("%d", &escolha);
         switch(escolha)
         {
