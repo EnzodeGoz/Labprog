@@ -120,8 +120,8 @@ int addestoque(){
     
     return 0;
 }
-int testee(){
-    
+int delestoque(){
+    // TALVEZ TENHA QUE TIRAR DO MENU_ESTOQUE, COLOCAR PARÂMETROS E COLOCAR NO CARRINHO_MENU()
     int m;
     int n;
     int o;
@@ -141,24 +141,31 @@ int testee(){
     
     return 0;
 }
-int delestoque(){
+int altestoque(){
     int u;
     int t = 0;
     printf("Esse é o estoque atual:\n");
     estoque(ptritem, ptr);
     printf("Qual o código do item que deseja alterar?\n>");
     scanf("%i", &u);
-    t = ptr - (ptr - u);
-    printf("Novo código:\n>");
-    scanf("%i", &(ptritem+t)->codigo);
-    printf("Novo nome:\n>");
-    scanf("%s", &(ptritem+t)->nome_produto);
-    printf("Nova quantidade:\n>");
-    scanf("%i", &(ptritem+t)->quantidade);
-    printf("Novo preço:\n>");
-    scanf("%f", &(ptritem+t)->preco);
-    system("clear");
-    printf("Item removido.\n>");
+    for(t = 0; t < (int)ptr; t++){
+        if((ptritem + t)->codigo == u){
+            printf("Novo código:\n>");
+            scanf("%i", &(ptritem+t)->codigo);
+            printf("Novo nome:\n>");
+            scanf("%s", &(ptritem+t)->nome_produto);
+            printf("Nova quantidade:\n>");
+            scanf("%i", &(ptritem+t)->quantidade);
+            printf("Novo preço:\n>");
+            scanf("%f", &(ptritem+t)->preco);
+            system("clear");
+            printf("Item alterado.\n>");
+        }
+        else{
+            printf("Procurando produto...%i\n", t);
+        }
+        
+    }
     return 0;
 }
 
@@ -191,8 +198,8 @@ int menu_estoque(){
         system("clear");
         printf("Esse é o estoque atual:\n");
         estoque(ptritem, ptr);  
-        printf("\nDeseja adicionar ou alterar um produto do estoque?\n");
-        printf("1) Adicionar um produto\n2) Alterar um produto\n3) Sair\n>");
+        printf("\nDeseja adicionar, alterar ou remover a quantidade de um produto do estoque?\n");
+        printf("1) Adicionar um produto\n2) Alterar um produto\n3) Remover quantidade\n4) Sair\n>");
         int esc001 = 0;
         scanf("%d", &esc001);
         switch(esc001){
@@ -202,9 +209,13 @@ int menu_estoque(){
                 break;
             case 2:
                 system("clear");
-                testee();
+                altestoque();
                 break;
             case 3:
+                system("clear");
+                delestoque();
+                break;
+            case 4:
                 system("clear");
                 printf("Sair foi escolhido.\n");
                 break;
@@ -220,16 +231,21 @@ int menu_estoque(){
 }
 
 int vitrine(){
+   
+    int k = 0;
+    k = estoque_acervo();
+    system("clear");
     puts("|======================|");
     printf("        VITRINE\n");
     puts("|======================|");
-    int k = 0;
-    k = estoque_acervo();
     if (k == 0){
-        printf("A vitrine está vazia.\n");
+        printf("A vitrine está vazia.\nAdicione produtos no estoque.\n");
     }
     else if (k == 1){
-        printf("Fudeu :DDDDD");
+        printf("NOME DO PRODUTO | PREÇO\n");
+        for(int i=0;i<(int)ptr;i++) {
+        printf(" %s                 R$%2.f\n",(ptritem+i)->nome_produto, (ptritem+i)->preco);
+    } 
     }
     return 0;
 }
@@ -279,7 +295,7 @@ int menu_carrinho_compras(){
         printf("Esse é o seu carrinho de compras:\n");
         carrinho_compras();
         printf("Deseja finalizar a compra ou adicionar e remover itens?\n");
-        printf("1) Finalizar a compra\n2) Adicionar um ptritem\n3) Remover um ptritem\n4) Sair\n>");
+        printf("1) Finalizar a compra\n2) Adicionar um item\n3) Remover um item\n4) Sair\n>");
         int esc002 = 0;
         scanf("%d", &esc002);
         switch(esc002){
