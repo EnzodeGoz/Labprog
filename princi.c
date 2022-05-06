@@ -2,6 +2,7 @@
 #include <stdlib.h>
 /* Código desenvolvido em 29/04/2022 pelo aluno Enzo de Góz Pereira de matrícula 202110644 para a Atividade de Produção U2 da disciplina de Laboratório de Programação
 do curso de Análise e Desenvolvimento de Sistemas da Universidade La Salle.
+Link replit: https://replit.com/@ENZODE12/Gerenciadorcompras#main.c
 */
 // Declaração das variáveis e ponteiros goblais usados para armazenar dinâmicamente o número de itens dos ponteiros de vetores de structs.
 int m,*ptr, n, *ptrn;
